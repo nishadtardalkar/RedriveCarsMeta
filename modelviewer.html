@@ -43,7 +43,6 @@
 			import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 			import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-			import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 			let mixer;
 
@@ -68,23 +67,16 @@
 			const controls = new OrbitControls( camera, renderer.domElement );
 			controls.target.set( 0, 0.5, 0 );
 			controls.update();
-			controls.enablePan = false;
+			controls.enablePan = true;
+			controls.enableZoom = true;
 			controls.enableDamping = true;
 
-			const dracoLoader = new DRACOLoader();
-			dracoLoader.setDecoderPath( 'https://threejs.org/examples/jsm/libs/draco/gltf/' );
-
 			const loader = new GLTFLoader();
-			loader.setDRACOLoader( dracoLoader );
-			loader.load( 'glbs/0.glb', function ( gltf ) {
+			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/0.glb', function ( gltf ) {
 
 				const model = gltf.scene;
-				model.position.set( 1, 1, 0 );
-				model.scale.set( 0.01, 0.01, 0.01 );
+				model.position.set( 0, 0, 0 );
 				scene.add( model );
-
-				mixer = new THREE.AnimationMixer( model );
-				mixer.clipAction( gltf.animations[ 0 ] ).play();
 
 			}, undefined, function ( e ) {
 
