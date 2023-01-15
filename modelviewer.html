@@ -58,9 +58,9 @@
 
 			const scene = new THREE.Scene();
 			//scene.background = new THREE.Color( 0xbfe3dd );
-			scene.background = new THREE.Color( 0x030303 );
+			scene.background = new THREE.Color( 0xB3B3B3 );
 			//scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
-			scene.environment = new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/static/skybox.png' );
+			//scene.environment = new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/static/skybox.png' );
 
 			/*
 			const axesHelper = new THREE.AxesHelper( 1 );
@@ -98,6 +98,13 @@
 			const loader = new GLTFLoader();
 			//loader.setDRACOLoader( dracoLoader );
 			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/1.glb', function ( gltf ) {
+
+				gltf.scene.traverse(function (child) {
+				    if (child.isMesh) {
+				        child.castShadow = true;
+				        child.receiveShadow = true;
+				    }
+				})
 
 				const model = gltf.scene;
 				model.position.set( 0, 0, 0 );
