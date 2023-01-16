@@ -98,16 +98,7 @@
 			const ambientLight = new THREE.AmbientLight( 0x303030 );
 			scene.add( ambientLight );
 
-			/*
-			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-			const cube = new THREE.Mesh( geometry, material );
-			cube.position.set(0,0,0);
-			scene.add( cube );
-			*/
-
 			const controls = new OrbitControls( camera, renderer.domElement );
-			//controls.target.set( 0, -0.5, 0 );
 			controls.update();
 			controls.enablePan = false;
 			controls.enableDamping = true;
@@ -118,39 +109,42 @@
 			controls.maxPolarAngle = Math.PI / 2;
 			controls.enableRotate = true;
 
-			const dracoLoader = new DRACOLoader();
-			dracoLoader.setDecoderPath( 'https://threejs.org/examples/jsm/libs/draco/gltf/' );
-
 			const loader = new GLTFLoader();
-			//loader.setDRACOLoader( dracoLoader );
 			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/1.glb', function ( gltf ) {
-
 				gltf.scene.traverse(function (child) {
 				    if (child.isMesh) {
 				        child.castShadow = true;
 				        child.receiveShadow = true;
 				    }
-						else if(child.isLight) {
-							/*
-							child.castShadow = true;
-							child.shadow.mapSize.width = 2048;
-							child.shadow.mapSize.height = 2048;
-							child.shadow.camera.near = 0.1;
-							child.shadow.camera.far = 5;
-							child.shadow.focus = 1;
-							child.shadow.bias = -0.001;
-							*/
-						}
 				})
 
 				const model = gltf.scene;
 				model.position.set( 0, 0, 0 );
 				model.scale.set( 1, 1, 1 );
-				//model.position.set( 1, 1, 0 );
-				//model.scale.set( 0.01, 0.01, 0.01 );
 				scene.add( model );
 				animate();
+			}, undefined, function ( e ) {
+				console.error( e );
+			} );
 
+			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/platform.glb', function ( gltf ) {
+				gltf.scene.traverse(function (child) {
+				    if (child.isMesh) {
+				        child.castShadow = true;
+				        child.receiveShadow = true;
+					    	child.material = new THREE.MeshBasicMaterial({map: child.material.map});
+
+								var shadowMaterial = new THREE.ShadowMaterial({opacity:0.6});
+								var mesh = new THREE.Mesh(child.geometry, shadowMaterial);
+								mesh.receiveShadow = true;
+								scene.add(mesh);
+				    }
+				})
+
+				const model = gltf.scene;
+				model.position.set( 0, 0, 0 );
+				model.scale.set( 1, 1, 1 );
+				scene.add( model );
 			}, undefined, function ( e ) {
 				console.error( e );
 			} );
