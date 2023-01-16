@@ -119,11 +119,6 @@
 				        child.castShadow = true;
 				        child.receiveShadow = true;
 				    }
-						if (child.isLight) {
-							//child.intensity = 0;
-							child.distance = 0.01;
-							console.log(child);
-						}
 				})
 
 				const model = gltf.scene;
@@ -141,6 +136,8 @@
 				        child.castShadow = true;
 				        child.receiveShadow = true;
 					    	child.material = new THREE.MeshBasicMaterial({map: child.material.map});
+								child.material.transparent = true;
+								console.log(child.material);
 
 								var shadowMaterial = new THREE.ShadowMaterial({opacity:0.6});
 								var mesh = new THREE.Mesh(child.geometry, shadowMaterial);
