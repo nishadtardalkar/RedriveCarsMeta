@@ -53,13 +53,15 @@
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			renderer.outputEncoding = THREE.sRGBEncoding;
 			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 			container.appendChild( renderer.domElement );
 
 			const pmremGenerator = new THREE.PMREMGenerator( renderer );
 
 			const scene = new THREE.Scene();
 			//scene.background = new THREE.Color( 0xbfe3dd );
-			scene.background = new THREE.Color( 0xB3B3B3 );
+			//scene.background = new THREE.Color( 0xB3B3B3 );
+			scene.background = new THREE.Color( 0x030303 );
 			//scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
 			//scene.environment = new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/static/skybox.png' );
 
@@ -72,6 +74,17 @@
 			//camera.position.set( 5, 2, 8 );
 			camera.position.set( 3, 2, 3 );
 			camera.lookAt( 0, 0, 0 );
+
+			const light = new THREE.DirectionalLight(0xFFFFFF, 1);
+			light.shadow.bias = 0.01;
+			light.shadow.enabled = false;
+			light.position.set(-3, 2, -3);
+			light.target.position.set(0, 0, 0);
+			//scene.add(light);
+			//scene.add(light.target);
+
+			const ambientLight = new THREE.AmbientLight( 0x0F0F0F );
+			//scene.add( ambientLight );
 
 			/*
 			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -105,6 +118,17 @@
 				        child.castShadow = true;
 				        child.receiveShadow = true;
 				    }
+						else if(child.isLight) {
+							/*
+							child.castShadow = true;
+							child.shadow.mapSize.width = 2048;
+							child.shadow.mapSize.height = 2048;
+							child.shadow.camera.near = 0.1;
+							child.shadow.camera.far = 5;
+							child.shadow.focus = 1;
+							child.shadow.bias = -0.001;
+							*/
+						}
 				})
 
 				const model = gltf.scene;
