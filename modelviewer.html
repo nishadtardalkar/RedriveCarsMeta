@@ -75,16 +75,21 @@
 			camera.position.set( 3, 2, 3 );
 			camera.lookAt( 0, 0, 0 );
 
-			const light = new THREE.DirectionalLight(0xFFFFFF, 1);
-			light.shadow.bias = 0.01;
-			light.shadow.enabled = false;
-			light.position.set(-3, 2, -3);
+			const light = new THREE.DirectionalLight(0xFFFFFF, 4);
+			light.shadow.bias = -0.002;
+			light.shadow.normalBias = -0.002;
+			light.shadow.mapSize.width = 4096;
+			light.shadow.mapSize.height = 4096;
+			light.shadow.camera.near = 0.1;
+			light.shadow.camera.far = 5;
+			light.castShadow = true;
+			light.position.set(-1, 2, -1);
 			light.target.position.set(0, 0, 0);
-			//scene.add(light);
-			//scene.add(light.target);
+			scene.add(light);
+			scene.add(light.target);
 
-			const ambientLight = new THREE.AmbientLight( 0x0F0F0F );
-			//scene.add( ambientLight );
+			const ambientLight = new THREE.AmbientLight( 0x303030 );
+			scene.add( ambientLight );
 
 			/*
 			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
