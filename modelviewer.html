@@ -88,6 +88,13 @@
 			scene.add(light);
 			scene.add(light.target);
 
+			const light2 = new THREE.DirectionalLight(0xFFFFFF, 1);
+			light2.castShadow = false;
+			light2.position.set(-1, 2, -1);
+			light2.target.position.set(0, 0, 0);
+			scene.add(light2);
+			scene.add(light2.target);
+
 			const ambientLight = new THREE.AmbientLight( 0x303030 );
 			scene.add( ambientLight );
 
