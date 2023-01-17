@@ -106,9 +106,9 @@
 				scene.add( model );
 
 				mixer = new THREE.AnimationMixer( model );
-				console.log(gltf.animations);
-				mixer.clipAction(gltf.animations[0]).play();
-				mixer.clipAction(gltf.animations[1]).play();
+				for (var anim of gltf.animations) {
+					mixer.clipAction(anim).play();
+				}
 
 				animate();
 			}, undefined, function ( e ) {
