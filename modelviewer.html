@@ -1,21 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - animation - keyframes</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="https://threejs.org/examples/main.css">
-		<style>
-			body {
-				background-color: #bfe3dd;
-				color: #000;
-			}
-
-			a {
-				color: #2983ff;
-			}
-		</style>
-
 	</head>
 
 	<body>
@@ -60,25 +48,12 @@
 			container.appendChild( renderer.domElement );
 
 
-			const pmremGenerator = new THREE.PMREMGenerator( renderer );
-
 			const scene = new THREE.Scene();
-			//scene.background = new THREE.Color( 0xbfe3dd );
-			//scene.background = new THREE.Color( 0xB3B3B3 );
 			scene.background = new THREE.Color( 0xEEDFC9 );
-			//scene.environment = pmremGenerator.fromScene( new RoomEnvironment(), 0.04 ).texture;
-			//scene.environment = new THREE.TextureLoader().load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/static/skybox.png' );
 
 			const camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.1, 100 );
-			//camera.position.set( 5, 2, 8 );
 			camera.position.set( 3, 2, 3 );
 			camera.lookAt( 0, 0, 0 );
-
-			/*
-			const renderScene = new RenderPass( scene, camera );
-			const composer = new EffectComposer( renderer );
-			composer.addPass( renderScene );
-			*/
 
 			const light = new THREE.DirectionalLight(0xFFFFFF, 5);
 			light.shadow.bias = -0.002;
@@ -180,7 +155,6 @@
 				const delta = clock.getDelta();
 				controls.update();
 				renderer.render( scene, camera );
-				//composer.render();
 			}
 
 
