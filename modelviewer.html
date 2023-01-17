@@ -121,7 +121,7 @@
 				        child.castShadow = true;
 				        child.receiveShadow = true;
 				    }
-				})
+				});
 
 				const model = gltf.scene;
 				model.position.set( 0, 0, 0 );
@@ -132,6 +132,24 @@
 				console.error( e );
 			} );
 
+
+			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/extras.glb', function ( gltf ) {
+				gltf.scene.traverse(function (child) {
+					if (child.isMesh) {
+		        child.castShadow = true;
+		        child.receiveShadow = true;
+			    }
+				})
+
+				const model = gltf.scene;
+				model.position.set( 0, 0, 0 );
+				model.scale.set( 1, 1, 1 );
+				scene.add( model );
+			}, undefined, function ( e ) {
+				console.error( e );
+			} );
+
+
 			loader.load( 'https://raw.githubusercontent.com/nishadtardalkar/RedriveCarsMeta/main/glbs/platform.glb', function ( gltf ) {
 				gltf.scene.traverse(function (child) {
 				    if (child.isMesh) {
@@ -139,7 +157,6 @@
 				        child.receiveShadow = true;
 					    	child.material = new THREE.MeshBasicMaterial({map: child.material.map});
 								child.material.transparent = true;
-								console.log(child.material);
 
 								var shadowMaterial = new THREE.ShadowMaterial({opacity:0.6});
 								var mesh = new THREE.Mesh(child.geometry, shadowMaterial);
@@ -155,6 +172,8 @@
 			}, undefined, function ( e ) {
 				console.error( e );
 			} );
+
+
 
 			function animate() {
 				requestAnimationFrame( animate );
